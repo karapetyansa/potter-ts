@@ -7,6 +7,8 @@ import "./App.css";
 
 import {CharactersList} from "./components/CharactersList";
 import {configureStore} from "./core/store/configureStore";
+import {ThemeProvider} from "./core/styledComponents";
+import {theme} from "./core/theme";
 // tslint:disable-next-line:no-var-requires
 const logo = require("./logo.svg");
 
@@ -27,18 +29,20 @@ const {store, history, persistor} = configureStore();
 export class App extends React.Component {
     public render() {
         return (
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <ConnectedRouter history={history}>
-                        <React.Fragment>
-                            <MainPage />
-                            <Switch>
-                                <Route exact={true} path="/" component={CharactersList} />
-                            </Switch>
-                        </React.Fragment>
-                    </ConnectedRouter>
-                </PersistGate>
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <ConnectedRouter history={history}>
+                            <React.Fragment>
+                                <MainPage />
+                                <Switch>
+                                    <Route exact={true} path="/" component={CharactersList} />
+                                </Switch>
+                            </React.Fragment>
+                        </ConnectedRouter>
+                    </PersistGate>
+                </Provider>
+            </ThemeProvider>
         );
     }
 }

@@ -5,6 +5,7 @@ import {createSelector} from "reselect";
 import {ICharacter} from "../api/dto/characters";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
+import {Button} from "../ui/Button";
 import {Filters} from "./Filters";
 
 const mapState = createSelector(
@@ -48,7 +49,8 @@ export const CharactersList = connect(
                 <div>
                     <Filters />
                     <ul>{charactersList.map(this.renderCharacterItem)}</ul>
-                    <button onClick={reload}>Reload</button>
+                    {/* <button >Reload</button> */}
+                    <Button onClick={reload} children="reload" />
                 </div>
             );
         }
