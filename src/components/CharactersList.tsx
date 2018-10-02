@@ -55,12 +55,13 @@ export const CharactersList = connect(
                                 <List
                                     autoHeight={true}
                                     isScrolling={isScrolling}
+                                    overscanRowCount={5}
                                     height={height}
                                     rowCount={charactersList.length}
-                                    rowHeight={376}
+                                    rowHeight={420}
                                     rowRenderer={this.renderCharacterItem}
                                     scrollTop={scrollTop}
-                                    width={500}
+                                    width={width - 20 > 500 ? 500 : width - 20}
                                 />
                             </div>
                         )}

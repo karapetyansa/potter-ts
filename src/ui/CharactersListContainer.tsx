@@ -6,7 +6,7 @@ export const CharactersListContainer = styled<{}, "main">("main")`
     flex: 1;
     align-items: center;
     width: 100%;
-    width: 1000px;
+    max-width: 1000px;
     padding: 10px;
     padding-top: 55px;
 `;
