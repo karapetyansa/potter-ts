@@ -22,7 +22,7 @@ export class CharacterProperty extends React.PureComponent<IProps> {
         return (
             <PropsRow>
                 <TextTitle children={changeCase.sentence(title)} />
-                <Text>{this.getValueString(value)}</Text>
+                <Text value={value}>{this.getValueString(value)}</Text>
             </PropsRow>
         );
     }
