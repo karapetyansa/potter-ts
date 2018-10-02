@@ -65,7 +65,7 @@ export const CharactersList = connect(
                                     rowHeight={420}
                                     rowRenderer={this.renderCharacterItem}
                                     scrollTop={scrollTop}
-                                    width={width > 500 ? 500 : width}
+                                    width={width - 20 > 500 ? 500 : width - 20}
                                 />
                             </div>
                         )}
