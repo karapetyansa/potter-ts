@@ -2,6 +2,7 @@
     "name": "potter",
     "version": "0.1.0",
     "private": true,
+    "main": "src/index.tsx",
     "dependencies": {
         "connected-react-router": "^4.5.0",
         "react": "^16.5.2",
@@ -13,7 +14,10 @@
         "redux-persist": "^5.10.0",
         "reselect": "^4.0.0",
         "typescript-fsa": "^3.0.0-beta-2",
-        "typescript-fsa-reducers": "^0.4.5"
+        "typescript-fsa-reducers": "^0.4.5",
+        "tslib": "1.9.3",
+        "redux-devtools-extension": "^2.13.5",
+        "redux-saga": "^0.16.0"
     },
     "scripts": {
         "start": "react-scripts-ts start",
@@ -35,7 +39,6 @@
         "husky": "^1.0.1",
         "lint-staged": "^7.3.0",
         "prettier": "^1.14.3",
-        "redux-devtools-extension": "^2.13.5",
         "redux-saga": "^0.16.0",
         "tslint": "^5.11.0",
         "tslint-react": "^3.6.0",
