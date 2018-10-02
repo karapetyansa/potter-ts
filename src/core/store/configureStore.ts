@@ -5,7 +5,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {PersistConfig, persistReducer, persistStore} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createSagaMiddleware, {SagaMiddleware} from "redux-saga";
-import {loadCharactersSaga} from "../../modules/characters/charactersSaga";
+import {loadCharacterSaga, loadCharactersSaga} from "../../modules/characters/charactersSaga";
 import {mainReducer} from "./mainReducer";
 
 const persistConfig: PersistConfig = {
@@ -36,4 +36,5 @@ export function configureStore() {
 
 const runSagas = (sagaMiddleware: SagaMiddleware<{}>) => {
     sagaMiddleware.run(loadCharactersSaga);
+    sagaMiddleware.run(loadCharacterSaga);
 };

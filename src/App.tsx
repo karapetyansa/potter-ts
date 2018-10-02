@@ -6,6 +6,7 @@ import "react-virtualized/styles.css";
 import {PersistGate} from "redux-persist/integration/react";
 import "./App.css";
 
+import {CharacterPage} from "./components/CharacterPage";
 import {CharactersList} from "./components/CharactersList";
 import {Header} from "./components/Header";
 import {configureStore} from "./core/store/configureStore";
@@ -27,6 +28,7 @@ export class App extends React.Component {
                                     <PageContainer>
                                         <Header />
                                         <Route exact={true} path="/" component={CharactersList} />
+                                        <Route path="/:id" component={CharacterPage} />
                                     </PageContainer>
                                 </Switch>
                             </React.Fragment>

@@ -14,7 +14,7 @@ const CharacterCardContainer = styled<{}, "div">("div")`
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
     max-width: 500px;
-    margin: 10px;
+    margin: 5px;
     background-color: ${(props) => props.theme.colors.white};
 `;
 

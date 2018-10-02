@@ -1,11 +1,15 @@
-import {call, put, takeLatest} from "redux-saga/effects";
+import {call, put, takeEvery} from "redux-saga/effects";
 import {Action} from "typescript-fsa/src/index";
-import {getCharacters} from "../../api/characters";
-import {ICharactersRequest, ICharactersResponse} from "../../api/dto/characters";
-import {loadCharacters} from "./charactersActions";
+import {getCharacter, getCharacters} from "../../api/characters";
+import {ICharacterResponse, ICharactersRequest, ICharactersResponse} from "../../api/dto/characters";
+import {loadCharacter, loadCharacters} from "./charactersActions";
 
 export function* loadCharactersSaga() {
-    yield takeLatest(loadCharacters.started.type, loadCharactersAsync);
+    yield takeEvery(loadCharacters.started.type, loadCharactersAsync);
+}
+
+export function* loadCharacterSaga() {
+    yield takeEvery(loadCharacter.started.type, loadCharacterAsync);
 }
 
 function* loadCharactersAsync({payload: params}: Action<ICharactersRequest>) {
@@ -18,5 +22,14 @@ function* loadCharactersAsync({payload: params}: Action<ICharactersRequest>) {
         }
     } catch (error) {
         yield put(loadCharacters.failed({params, error: error.message}));
+    }
+}
+
+function* loadCharacterAsync({payload: id}: Action<string>) {
+    try {
+        const result: ICharacterResponse = yield call(getCharacter, id);
+        yield put(loadCharacter.done({params: id, result}));
+    } catch (error) {
+        yield put(loadCharacter.failed({params: id, error: error.message}));
     }
 }

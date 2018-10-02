@@ -1,5 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 import {CellMeasurer, CellMeasurerCache, List, ListRowRenderer, WindowScroller} from "react-virtualized";
 import {Dispatch} from "redux";
 import {createSelector} from "reselect";
@@ -81,9 +82,9 @@ export const CharactersList = connect(
             const {_id, __v, ...character} = this.props.charactersList[index];
             return (
                 <CellMeasurer cache={this.cache} columnIndex={0} key={key} rowIndex={index} parent={parent}>
-                    <div key={_id} style={style}>
+                    <Link key={_id} to={`/${_id}`} style={{...style, textDecoration: "none"}}>
                         <CharacterCard {...character} />
-                    </div>
+                    </Link>
                 </CellMeasurer>
             );
         };

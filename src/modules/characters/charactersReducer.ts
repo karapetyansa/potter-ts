@@ -1,7 +1,7 @@
 import {Success} from "typescript-fsa";
 import {reducerWithInitialState} from "typescript-fsa-reducers";
 import {ICharacter, ICharactersRequest} from "../../api/dto/characters";
-import {loadCharacters} from "./charactersActions";
+import {loadCharacter, loadCharacters} from "./charactersActions";
 
 interface ICharactersState {
     loading: boolean;
@@ -26,4 +26,11 @@ const loadCharactersDonedHandler = (
 export const charactersReducer = reducerWithInitialState(charactetsInitialState)
     .case(loadCharacters.started, (state) => ({...state, loading: true}))
     .case(loadCharacters.done, loadCharactersDonedHandler)
-    .case(loadCharacters.failed, (state, {error}) => ({...state, error, loading: false}));
+    .case(loadCharacters.failed, (state, {error}) => ({...state, error, loading: false}))
+    .case(loadCharacter.started, (state) => ({...state, loading: true}))
+    .case(loadCharacter.done, ({data, ...state}, {params: id, result}) => ({
+        ...state,
+        data: {...data, [id]: result},
+        loading: false
+    }))
+    .case(loadCharacter.failed, (state, {error}) => ({...state, error, loading: false}));

@@ -27,3 +27,4 @@ export interface ICharacter {
 export type ICharactersRequest = Omit<ICharacter, "_id" | "__v" | "name">;
 
 export type ICharactersResponse = ICharacter[] | IError;
+export type ICharacterResponse = ICharacter;
