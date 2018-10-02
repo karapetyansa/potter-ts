@@ -5,6 +5,7 @@ import {Omit} from "../types/interfaces";
 import {CharacterProperty} from "./CharacterProperty";
 
 const CharacterCardContainer = styled<{}, "div">("div")`
+    box-sizing: border-box;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     border-radius: 5px;
@@ -14,7 +15,7 @@ const CharacterCardContainer = styled<{}, "div">("div")`
     }
     max-width: 500px;
     margin: 10px;
-    height: 320px;
+    height: 360px;
     background-color: ${(props) => props.theme.colors.white};
 `;
 

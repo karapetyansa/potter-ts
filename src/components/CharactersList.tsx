@@ -51,8 +51,10 @@ export const CharactersList = connect(
             const {reload, charactersList} = this.props;
             return (
                 <CharactersListContainer>
+                    <Button onClick={reload} style={{marginBottom: 10}}>
+                        Reload
+                    </Button>
                     <Filters />
-                    <Button onClick={reload}>Reload</Button>
                     <WindowScroller>
                         {({height, width, isScrolling, scrollTop}) => (
                             <div>
@@ -61,7 +63,7 @@ export const CharactersList = connect(
                                     isScrolling={isScrolling}
                                     height={height}
                                     rowCount={charactersList.length}
-                                    rowHeight={370}
+                                    rowHeight={376}
                                     rowRenderer={this.renderCharacterItem}
                                     scrollTop={scrollTop}
                                     width={500}
