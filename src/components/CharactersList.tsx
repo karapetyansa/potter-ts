@@ -1,8 +1,8 @@
 import * as React from "react";
 import {connect} from "react-redux";
+import {List, ListRowRenderer, WindowScroller} from "react-virtualized";
 import {Dispatch} from "redux";
 import {createSelector} from "reselect";
-import {ICharacter} from "../api/dto/characters";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
 import {Button} from "../ui/Button";
@@ -11,13 +11,14 @@ import {CharacterCard} from "./CharacterCard";
 import {Filters} from "./Filters";
 
 const mapState = createSelector(
-    (state: IAppState) => state.characters,
+    (state: IAppState) => state.characters.data,
+    (state) => state.characters.loading,
     (state) => state.filters,
-    (characters, filters) => {
+    (charactersData, loading, filters) => {
         const {type, searchString, caseSensitive} = filters;
-        const charactersList = Object.keys(characters.data)
-            .filter((key) => {
-                const item = characters.data[key];
+        const charactersList = Object.keys(charactersData)
+            .map((key) => charactersData[key])
+            .filter((item) => {
                 const itemFilteredProps = item[type];
                 if (itemFilteredProps == null) {
                     return false;
@@ -26,9 +27,8 @@ const mapState = createSelector(
                         ? itemFilteredProps.indexOf(searchString) !== -1
                         : itemFilteredProps.toLowerCase().indexOf(searchString.toLowerCase()) !== -1;
                 }
-            })
-            .map((key) => characters.data[key]);
-        return {charactersList};
+            });
+        return {charactersList, loading};
     }
 );
 
@@ -46,18 +46,38 @@ export const CharactersList = connect(
         public componentDidMount() {
             this.props.reload();
         }
+
         public render() {
             const {reload, charactersList} = this.props;
             return (
-                <PageContainer>
-                    <Button onClick={reload} children="reload" style={{alignSelf: "flex-start"}} />
-                    <Filters />
-                    <div>{charactersList.map(this.renderCharacterItem)}</div>
-                </PageContainer>
+                <WindowScroller>
+                    {({height, width, isScrolling, scrollTop}) => (
+                        <PageContainer>
+                            <Filters />
+                            <Button onClick={reload}>Reload</Button>
+                            <List
+                                autoHeight={true}
+                                isScrolling={isScrolling}
+                                height={height}
+                                rowCount={charactersList.length}
+                                rowHeight={400}
+                                rowRenderer={this.renderCharacterItem}
+                                scrollTop={scrollTop}
+                                width={width}
+                            />
+                        </PageContainer>
+                    )}
+                </WindowScroller>
             );
         }
-        private renderCharacterItem = ({_id, __v, ...character}: ICharacter) => (
-            <CharacterCard key={_id} {...character} />
-        );
+
+        private renderCharacterItem: ListRowRenderer = ({index, isScrolling, key, style}) => {
+            const {_id, __v, ...character} = this.props.charactersList[index];
+            return (
+                <div key={_id} style={style}>
+                    <CharacterCard {...character} />
+                </div>
+            );
+        };
     }
 );

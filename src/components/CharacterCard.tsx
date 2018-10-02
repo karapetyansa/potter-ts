@@ -13,6 +13,8 @@ const CharacterCardContainer = styled<{}, "div">("div")`
     :hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
+    max-width: 500px;
+    margin: 0px 10px 0px 10px;
 `;
 
 type IProps = Omit<ICharacter, "_id" | "__v">;
