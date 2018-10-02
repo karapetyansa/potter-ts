@@ -1,22 +1,44 @@
-import * as React from 'react';
-import './App.css';
+import {ConnectedRouter} from "connected-react-router";
+import * as React from "react";
+import {Provider} from "react-redux";
+import {Route, Switch} from "react-router-dom";
+import {PersistGate} from "redux-persist/integration/react";
+import "./App.css";
 
-const logo = require('./logo.svg');
+import {CharactersList} from "./components/CharactersList";
+import {configureStore} from "./core/store/configureStore";
+// tslint:disable-next-line:no-var-requires
+const logo = require("./logo.svg");
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
+const MainPage = () => (
+    <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+            To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
-      </div>
-    );
-  }
-}
+    </div>
+);
 
-export default App;
+const {store, history, persistor} = configureStore();
+
+export class App extends React.Component {
+    public render() {
+        return (
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <ConnectedRouter history={history}>
+                        <React.Fragment>
+                            <MainPage />
+                            <Switch>
+                                <Route exact={true} path="/" component={CharactersList} />
+                            </Switch>
+                        </React.Fragment>
+                    </ConnectedRouter>
+                </PersistGate>
+            </Provider>
+        );
+    }
+}
