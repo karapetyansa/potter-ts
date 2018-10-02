@@ -6,6 +6,7 @@ import {ReloadButton} from "./ReloadButton";
 
 const HeaderContainer = styled<{}, "header">("header")`
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -14,7 +15,7 @@ const HeaderContainer = styled<{}, "header">("header")`
     width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-    padding: 10px 0px 10px 0px;
+    padding: 5px 0px 5px 0px;
 `;
 
 export class Header extends React.Component {
