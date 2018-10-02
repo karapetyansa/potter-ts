@@ -76,33 +76,7 @@ export const CharactersList = connect(
                 </CharactersListContainer>
             );
         }
-        // _rowRenderer({index, key, parent, style}) {
-        //     const {getClassName, list} = this.props;
 
-        //     const datum = list.get(index % list.size);
-        //     const classNames = getClassName({columnIndex: 0, rowIndex: index});
-
-        //     const imageWidth = 300;
-        //     const imageHeight = datum.size * (1 + (index % 3));
-
-        //     const source = `https://fillmurray.com/${imageWidth}/${imageHeight}`;
-
-        //     return (
-        //         <CellMeasurer cache={this._cache} columnIndex={0} key={key} rowIndex={index} parent={parent}>
-        //             {({measure}) => (
-        //                 <div className={classNames} style={style}>
-        //                     <img
-        //                         onLoad={measure}
-        //                         src={source}
-        //                         style={{
-        //                             width: imageWidth
-        //                         }}
-        //                     />
-        //                 </div>
-        //             )}
-        //         </CellMeasurer>
-        //     );
-        // }
         private renderCharacterItem: ListRowRenderer = ({index, parent, key, style}) => {
             const {_id, __v, ...character} = this.props.charactersList[index];
             return (
