@@ -6,7 +6,7 @@ import {createSelector} from "reselect";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
 import {Button} from "../ui/Button";
-import {PageContainer} from "../ui/PageContainer";
+import {CharactersListContainer} from "../ui/CharactersListContainer";
 import {CharacterCard} from "./CharacterCard";
 import {Filters} from "./Filters";
 
@@ -50,24 +50,26 @@ export const CharactersList = connect(
         public render() {
             const {reload, charactersList} = this.props;
             return (
-                <WindowScroller>
-                    {({height, width, isScrolling, scrollTop}) => (
-                        <PageContainer>
-                            <Filters />
-                            <Button onClick={reload}>Reload</Button>
-                            <List
-                                autoHeight={true}
-                                isScrolling={isScrolling}
-                                height={height}
-                                rowCount={charactersList.length}
-                                rowHeight={400}
-                                rowRenderer={this.renderCharacterItem}
-                                scrollTop={scrollTop}
-                                width={width}
-                            />
-                        </PageContainer>
-                    )}
-                </WindowScroller>
+                <CharactersListContainer>
+                    <Filters />
+                    <Button onClick={reload}>Reload</Button>
+                    <WindowScroller>
+                        {({height, width, isScrolling, scrollTop}) => (
+                            <div>
+                                <List
+                                    autoHeight={true}
+                                    isScrolling={isScrolling}
+                                    height={height}
+                                    rowCount={charactersList.length}
+                                    rowHeight={370}
+                                    rowRenderer={this.renderCharacterItem}
+                                    scrollTop={scrollTop}
+                                    width={500}
+                                />
+                            </div>
+                        )}
+                    </WindowScroller>
+                </CharactersListContainer>
             );
         }
 
