@@ -2,13 +2,14 @@ import * as changeCase from "change-case";
 import * as React from "react";
 import {styled} from "../core/styledComponents";
 import {Text} from "../ui/Text";
+import {TextName} from "../ui/TextName";
 import {TextTitle} from "../ui/TextTitle";
 
-const PropsRow = styled<{}, "div">("div")`
+const PropsRow = styled<{isName: boolean}, "div">("div")`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 5px;
+    justify-content: ${(props) => (props.isName ? "center" : "space-between")};
+    margin-bottom: ${(props) => (props.isName ? "10px" : "5px")};
 `;
 
 interface IProps {
@@ -20,9 +21,10 @@ export class CharacterProperty extends React.PureComponent<IProps> {
         const {title, value} = this.props;
 
         return (
-            <PropsRow>
-                <TextTitle children={changeCase.sentence(title)} />
-                <Text value={value}>{this.getValueString(value)}</Text>
+            <PropsRow isName={title === "name"}>
+                {title === "name" && <TextName>{value}</TextName>}
+                {title !== "name" && <TextTitle children={changeCase.sentence(title)} />}
+                {title !== "name" && <Text value={value}>{this.getValueString(value)}</Text>}
             </PropsRow>
         );
     }
