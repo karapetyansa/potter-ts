@@ -15,7 +15,6 @@ const CharacterCardContainer = styled<{}, "div">("div")`
     }
     max-width: 500px;
     margin: 10px;
-    height: 395px;
     background-color: ${(props) => props.theme.colors.white};
 `;
 
