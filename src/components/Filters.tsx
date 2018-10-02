@@ -26,7 +26,13 @@ export const Filters = connect(
                     <select value={type} onChange={this.onChangeType}>
                         {options}
                     </select>
-                    <input type="text" value={searchString} onChange={this.onChangeSearchText} />
+                    <input
+                        type="text"
+                        value={searchString}
+                        onChange={this.onChangeSearchText}
+                        placeholder={type === "name" ? "Character name" : "Character role"}
+                    />
+                    <label style={{marginLeft: 10}}>Case sensitive:</label>
                     <input type="checkbox" checked={caseSensitive} onChange={this.onCaseSensitiveChange} />
                 </div>
             );
