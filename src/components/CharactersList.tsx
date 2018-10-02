@@ -5,12 +5,26 @@ import {createSelector} from "reselect";
 import {ICharacter} from "../api/dto/characters";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
+import {Filters} from "./Filters";
 
 const mapState = createSelector(
     (state: IAppState) => state.characters.data,
     (state) => state.characters.loading,
-    (charactersData, loading) => {
-        const charactersList = Object.keys(charactersData).map((key) => charactersData[key]);
+    (state) => state.filters,
+    (charactersData, loading, filters) => {
+        const {type, searchString, caseSensitive} = filters;
+        const charactersList = Object.keys(charactersData)
+            .map((key) => charactersData[key])
+            .filter((item) => {
+                const itemFilteredProps = item[type];
+                if (itemFilteredProps == null) {
+                    return false;
+                } else {
+                    return caseSensitive
+                        ? itemFilteredProps.indexOf(searchString) !== -1
+                        : itemFilteredProps.toLowerCase().indexOf(searchString.toLowerCase()) !== -1;
+                }
+            });
         return {charactersList, loading};
     }
 );
@@ -54,6 +68,7 @@ export const CharactersList = connect(
             const items = charactersList.slice(0, (currentScrollPage + 1) * scrollPortion);
             return (
                 <div>
+                    <Filters />
                     <ul ref={this.containerRef}>{items.map(this.renderCharacterItem)}</ul>
                     <button onClick={reload}>Reload</button>
                 </div>
