@@ -1,3 +1,4 @@
+import * as changeCase from "change-case";
 import * as React from "react";
 import {styled} from "../core/styledComponents";
 import {Text} from "../ui/Text";
@@ -20,7 +21,7 @@ export class CharacterProperty extends React.PureComponent<IProps> {
 
         return (
             <PropsRow>
-                <TextTitle children={title} />
+                <TextTitle children={changeCase.sentence(title)} />
                 <Text>{this.getValueString(value)}</Text>
             </PropsRow>
         );
