@@ -13,4 +13,5 @@ export const Button = styled<{}, "div">("div")`
     :hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
+    margin: 5px 0px 5px 0px;
 `;
