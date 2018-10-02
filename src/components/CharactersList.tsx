@@ -6,6 +6,8 @@ import {ICharacter} from "../api/dto/characters";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
 import {Button} from "../ui/Button";
+import {PageContainer} from "../ui/PageContainer";
+import {CharacterCard} from "./CharacterCard";
 import {Filters} from "./Filters";
 
 const mapState = createSelector(
@@ -14,8 +16,8 @@ const mapState = createSelector(
     (characters, filters) => {
         const {type, searchString, caseSensitive} = filters;
         const charactersList = Object.keys(characters.data)
-            .map((key) => characters.data[key])
-            .filter((item) => {
+            .filter((key) => {
+                const item = characters.data[key];
                 const itemFilteredProps = item[type];
                 if (itemFilteredProps == null) {
                     return false;
@@ -24,7 +26,8 @@ const mapState = createSelector(
                         ? itemFilteredProps.indexOf(searchString) !== -1
                         : itemFilteredProps.toLowerCase().indexOf(searchString.toLowerCase()) !== -1;
                 }
-            });
+            })
+            .map((key) => characters.data[key]);
         return {charactersList};
     }
 );
@@ -46,14 +49,15 @@ export const CharactersList = connect(
         public render() {
             const {reload, charactersList} = this.props;
             return (
-                <div>
+                <PageContainer>
+                    <Button onClick={reload} children="reload" style={{alignSelf: "flex-start"}} />
                     <Filters />
-                    <ul>{charactersList.map(this.renderCharacterItem)}</ul>
-                    {/* <button >Reload</button> */}
-                    <Button onClick={reload} children="reload" />
-                </div>
+                    <div>{charactersList.map(this.renderCharacterItem)}</div>
+                </PageContainer>
             );
         }
-        private renderCharacterItem = ({_id, ...character}: ICharacter) => <li key={_id}>{character.name}</li>;
+        private renderCharacterItem = ({_id, __v, ...character}: ICharacter) => (
+            <CharacterCard key={_id} {...character} />
+        );
     }
 );
