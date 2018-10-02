@@ -5,10 +5,8 @@ import {Dispatch} from "redux";
 import {createSelector} from "reselect";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
-import {Button} from "../ui/Button";
 import {CharactersListContainer} from "../ui/CharactersListContainer";
 import {CharacterCard} from "./CharacterCard";
-import {Filters} from "./Filters";
 
 const mapState = createSelector(
     (state: IAppState) => state.characters.data,
@@ -48,13 +46,9 @@ export const CharactersList = connect(
         }
 
         public render() {
-            const {reload, charactersList} = this.props;
+            const {charactersList} = this.props;
             return (
                 <CharactersListContainer>
-                    <Button onClick={reload} style={{marginBottom: 10}}>
-                        Reload
-                    </Button>
-                    <Filters />
                     <WindowScroller>
                         {({height, width, isScrolling, scrollTop}) => (
                             <div>

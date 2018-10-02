@@ -8,4 +8,5 @@ export const CharactersListContainer = styled<{}, "main">("main")`
     width: 100%;
     width: 1000px;
     padding: 10px;
+    padding-top: 55px;
 `;

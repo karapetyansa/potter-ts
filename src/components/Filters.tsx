@@ -2,8 +2,14 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {IAppState} from "../core/store/mainReducer";
+import {styled} from "../core/styledComponents";
 import {setFilters} from "../modules/filters/filtersActions";
 import {filterTypes, IFilterState} from "../modules/filters/filtersReducer";
+
+const Label = styled<{}, "label">("label")`
+    color: ${(props) => props.theme.colors.white};
+    margin-left: 10px;
+`;
 
 const mapState = (state: IAppState) => ({...state.filters});
 
@@ -32,8 +38,13 @@ export const Filters = connect(
                         onChange={this.onChangeSearchText}
                         placeholder={type === "name" ? "Character name" : "Character role"}
                     />
-                    <label style={{marginLeft: 10}}>Case sensitive:</label>
-                    <input type="checkbox" checked={caseSensitive} onChange={this.onCaseSensitiveChange} />
+                    <Label>Case sensitive:</Label>
+                    <input
+                        type="checkbox"
+                        checked={caseSensitive}
+                        onChange={this.onCaseSensitiveChange}
+                        style={{marginRight: 10}}
+                    />
                 </div>
             );
         }
