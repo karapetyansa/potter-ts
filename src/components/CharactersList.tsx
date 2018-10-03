@@ -58,20 +58,18 @@ export const CharactersList = connect(
                 <CharactersListContainer>
                     <WindowScroller>
                         {({height, width, isScrolling, scrollTop}) => (
-                            <div>
-                                <List
-                                    autoHeight={true}
-                                    isScrolling={isScrolling}
-                                    deferredMeasurementCache={this.cache}
-                                    overscanRowCount={5}
-                                    height={height}
-                                    rowCount={charactersList.length}
-                                    rowHeight={this.cache.rowHeight}
-                                    rowRenderer={this.renderCharacterItem}
-                                    scrollTop={scrollTop}
-                                    width={width - 20 > 500 ? 500 : width - 20}
-                                />
-                            </div>
+                            <List
+                                autoHeight={true}
+                                isScrolling={isScrolling}
+                                deferredMeasurementCache={this.cache}
+                                overscanRowCount={5}
+                                height={height}
+                                rowCount={charactersList.length}
+                                rowHeight={this.cache.rowHeight}
+                                rowRenderer={this.renderCharacterItem}
+                                scrollTop={scrollTop}
+                                width={width - 20 > 500 ? 500 : width - 20}
+                            />
                         )}
                     </WindowScroller>
                 </CharactersListContainer>
