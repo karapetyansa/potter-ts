@@ -13,7 +13,7 @@ const CharacterCardContainer = styled<{}, "div">("div")`
     :hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
-    max-width: 500px;
+    width: 100%;
     margin: 5px;
     background-color: ${(props) => props.theme.colors.white};
 `;

@@ -1,9 +1,10 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {CellMeasurer, CellMeasurerCache, List, ListRowRenderer, WindowScroller} from "react-virtualized";
+import VirtualList from "react-virtual-list";
 import {Dispatch} from "redux";
 import {createSelector} from "reselect";
+import {ICharacter} from "../api/dto/characters";
 import {IAppState} from "../core/store/mainReducer";
 import {loadCharacters} from "../modules/characters/charactersActions";
 import {CharactersListContainer} from "../ui/CharactersListContainer";
@@ -37,54 +38,30 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 interface IProps extends ReturnType<typeof mapState>, ReturnType<typeof mapDispatch> {}
 
+const MyList = ({virtual}: {virtual: any}) => <ul style={virtual.style}>{virtual.items.map(renderItem)}</ul>;
+const renderItem = ({_id, ...character}: ICharacter) => (
+    <Link key={_id} to={`/${_id}`} style={{textDecoration: "none"}}>
+        <CharacterCard {...character} />
+    </Link>
+);
+const MyVirtualList = VirtualList()(MyList);
+
 export const CharactersList = connect(
     mapState,
     mapDispatch
 )(
     class extends React.Component<IProps> {
-        private cache: CellMeasurerCache;
-
         public componentDidMount() {
             this.props.reload();
         }
 
         public render() {
-            this.cache = new CellMeasurerCache({
-                fixedWidth: true,
-                minHeight: 250
-            });
             const {charactersList} = this.props;
             return (
                 <CharactersListContainer>
-                    <WindowScroller>
-                        {({height, width, isScrolling, scrollTop}) => (
-                            <List
-                                autoHeight={true}
-                                isScrolling={isScrolling}
-                                deferredMeasurementCache={this.cache}
-                                overscanRowCount={5}
-                                height={height}
-                                rowCount={charactersList.length}
-                                rowHeight={this.cache.rowHeight}
-                                rowRenderer={this.renderCharacterItem}
-                                scrollTop={scrollTop}
-                                width={width - 20 > 500 ? 500 : width - 20}
-                            />
-                        )}
-                    </WindowScroller>
+                    <MyVirtualList itemBuffer={2} itemHeight={300} items={charactersList} />
                 </CharactersListContainer>
             );
         }
-
-        private renderCharacterItem: ListRowRenderer = ({index, parent, key, style}) => {
-            const {_id, __v, ...character} = this.props.charactersList[index];
-            return (
-                <CellMeasurer cache={this.cache} columnIndex={0} key={key} rowIndex={index} parent={parent}>
-                    <Link key={_id} to={`/${_id}`} style={{...style, textDecoration: "none"}}>
-                        <CharacterCard {...character} />
-                    </Link>
-                </CellMeasurer>
-            );
-        };
     }
 );
